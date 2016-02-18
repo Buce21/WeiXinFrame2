@@ -84,7 +84,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=INTEGER}
@@ -100,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="me.test.weixin.pojo.User" >
-    insert into user (id, username, birthday,
-    sex, address)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE},
-    #{sex,jdbcType=CHAR}, #{address,jdbcType=VARCHAR})
+    insert into user (id, username, birthday, 
+      sex, address)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{sex,jdbcType=CHAR}, #{address,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="me.test.weixin.pojo.User" >
     insert into user
@@ -174,10 +174,10 @@
   <update id="updateByExample" parameterType="map" >
     update user
     set id = #{record.id,jdbcType=INTEGER},
-    username = #{record.username,jdbcType=VARCHAR},
-    birthday = #{record.birthday,jdbcType=DATE},
-    sex = #{record.sex,jdbcType=CHAR},
-    address = #{record.address,jdbcType=VARCHAR}
+      username = #{record.username,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=DATE},
+      sex = #{record.sex,jdbcType=CHAR},
+      address = #{record.address,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
