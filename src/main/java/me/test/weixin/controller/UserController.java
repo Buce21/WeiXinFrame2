@@ -4,6 +4,7 @@ import me.test.weixin.pojo.User;
 import me.test.weixin.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by Administrator on 2016/2/17.
  */
 @Controller
+@Scope("prototype")
 @RequestMapping("/user")
 public class UserController {
     //service类
@@ -36,7 +38,6 @@ public class UserController {
         modelAndView.addObject("users",users);
         //设置响应的jsp视图
         modelAndView.setViewName("findUser");
-
         return modelAndView;
     }
 }
