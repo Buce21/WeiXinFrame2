@@ -4,6 +4,7 @@ import java.util.List;
 import me.test.weixin.pojo.User;
 import me.test.weixin.pojo.UserExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 public interface UserMapper {
     int countByExample(UserExample example);
