@@ -5,6 +5,7 @@ package me.test.weixin.utils.weixinutils;
  */
 
 import me.test.weixin.utils.weixinutils.message.Article;
+import me.test.weixin.utils.weixinutils.message.Message;
 import me.test.weixin.utils.weixinutils.message.Music;
 import me.test.weixin.utils.weixinutils.message.Voice;
 
@@ -26,7 +27,7 @@ public class FormatXmlProcess {
      * @return  xml格式结果 String
      * @throws Exception
      */
-    public String formatXmlAnswer(Object xmlEntity) throws  Exception {
+    public String formatXmlAnswer(Message xmlEntity) throws  Exception {
         StringBuffer sb = new StringBuffer();
 
         sb.append("<xml>");
@@ -53,7 +54,7 @@ public class FormatXmlProcess {
             Method m = xmlEntity.getClass().getMethod("get"+name);
             if(type.equals("long")&& name.equals("CreateTime")){        //时间参数
                 sb.append("<CreateTime>"+date.getTime()+"</CreateTime>");
-            }else if(type.equals("java.util.List<zhaotao.util.messageResp.Articel>")){    //图文
+            }else if(type.equals("java.util.List<me.test.weixin.utils.weixinutils.message.Article>")){    //图文
                 List<Article> articles =  (List<Article>) m.invoke(xmlEntity);
                 sb.append("<Articles>");
                 for(Article article:articles){
@@ -65,12 +66,12 @@ public class FormatXmlProcess {
             }else if(type.equals("class java.lang.String")){        //String
                 value = (String) m.invoke(xmlEntity);
                 sb.append("<"+name+"><![CDATA["+value+"]]></"+name+">");
-            }else if(type.equals("zhaotao.util.messageResp.Music")){    //音乐
+            }else if(type.equals("java.util.List<me.test.weixin.utils.weixinutils.message.Music")){    //音乐
                Music music = (Music) m.invoke(xmlEntity);
                 sb.append("<Music>");
                 sb.append(formatOBJtoSB(music));
                 sb.append("</Music>");
-            }else if(type.equals("zhaotao.util.messageResp.Voice")){    //声音
+            }else if(type.equals("java.util.List<me.test.weixin.utils.weixinutils.message.Voice")){    //声音
                 Voice voice = (Voice) m.invoke(xmlEntity);
                 sb.append("<Voice>");
                 sb.append(formatOBJtoSB(voice));

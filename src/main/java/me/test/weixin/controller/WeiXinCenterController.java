@@ -1,11 +1,11 @@
 package me.test.weixin.controller;
 
 import com.sun.istack.internal.logging.Logger;
+import me.test.weixin.service.WeiXinCenterServiceImpl;
 import me.test.weixin.utils.weixinutils.FormatXmlProcess;
 import me.test.weixin.utils.weixinutils.ReceiveXmlEntity;
 import me.test.weixin.utils.weixinutils.ReceiveXmlProcess;
-import me.test.weixin.utils.weixinutils.message.Article;
-import me.test.weixin.utils.weixinutils.message.NewsMessage;
+import me.test.weixin.utils.weixinutils.message.Message;
 import org.aspectj.weaver.ast.Test;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ZhaoTao on 2016/2/18.
@@ -27,12 +25,18 @@ import java.util.List;
 @RequestMapping("/center")
 @Scope("prototype")
 public class WeiXinCenterController {
+
+
+    private WeiXinCenterServiceImpl weiXinCenterService = new WeiXinCenterServiceImpl();
+
+
     private static String TOKEN = "suibian";
     private static Logger logger = Logger.getLogger(Test.class);
-    private ReceiveXmlEntity xmlMsg;    //xml对象
+    private ReceiveXmlEntity xmlMsg;    //xml实体对象
     private ReceiveXmlProcess receiveXmlProcess = new ReceiveXmlProcess();  //解析xml为对象
-    private FormatXmlProcess formXML ;
-    String result = new String();
+    private FormatXmlProcess formXML =new FormatXmlProcess();   //将实体对象封装为xml
+
+    String result = new String();   //返回结果
     /**
      * 验证
      */
@@ -40,10 +44,7 @@ public class WeiXinCenterController {
     @RequestMapping(value="/checkSignatureFirst",produces = "application/json; charset=utf-8")
     public @ResponseBody
     String checkSignatureFirst(HttpServletRequest request) throws IOException {
-
-        if(request.getAttribute("echostr")!=null){
-                return (String) request.getAttribute("echostr");
-        }else{
+            logger.info("begin");
             /** 读取接收到的xml消息 */
             StringBuffer sb = new StringBuffer();
             InputStream is = request.getInputStream();
@@ -57,43 +58,49 @@ public class WeiXinCenterController {
 
 
             /**------------------------------------**/
-            xmlMsg =  receiveXmlProcess.getMsgEntity(xml);
+            xmlMsg =  receiveXmlProcess.getMsgEntity(xml);  //接收信息实体对象
+            logger.info("接收信息为:"+xmlMsg.toString());
 
-            NewsMessage newMsg = new NewsMessage();
-            newMsg.setArticleCount("2");
-            newMsg.setCreateTime(new Long(0));
-            newMsg.setFromUserName(xmlMsg.getToUserName());
-            newMsg.setMsgType("news");
-            newMsg.setToUserName(xmlMsg.getFromUserName());
+            Message message = null;    //返回值
+            switch (xmlMsg.getMsgType()){
+                case "text":
 
-            List<Article> list = new ArrayList<Article>();
-
-            Article article = new Article();
-            article.setDescription("baidu");
-            article.setPicUrl("http://pic1a.nipic.com/2008-12-04/2008124215522671_2.jpg");
-            article.setTitle("你好");
-            article.setUrl("www.baidu.com");
-
-            Article article2 = new Article();
-            article2.setDescription("163");
-            article2.setPicUrl("http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg");
-            article2.setTitle("不好");
-            article2.setUrl("http://www.163.com/");
-
-            list.add(article);
-            list.add(article2);
-
-            newMsg.setArticles(list);
-
-
-            try {
-                String result = formXML.formatXmlAnswer(newMsg);
-            } catch (Exception e) {
-                result = "";
-                e.printStackTrace();
+                    try {
+                        message = weiXinCenterService.textResponse(xmlMsg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
-            return result;
+
+
+//            if(msgContent.equals("4")){
+//
+//                try {
+//                    return formXML.formatXmlAnswer(textMessage);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+
+//
+
+
+//            try {
+//                result = formXML.formatXmlAnswer(newMsg);
+//                logger.info("发送消息为:"+newMsg.toString());
+//            } catch (Exception e) {
+//                result = "";
+//                e.printStackTrace();
+//            }
+        try {
+            result = formXML.formatXmlAnswer(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
         }
 
 }
-}
+

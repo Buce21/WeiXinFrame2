@@ -3,7 +3,7 @@ package me.test.weixin.utils.weixinutils.message;
  * 文本消息 
  *  
  */  
-public class TextMessage extends BaseMessage {  
+public class TextMessage extends BaseMessage implements Message{
 	 // 接收方帐号（收到的OpenID）  
     private String ToUserName;  
     // 开发者微信号  

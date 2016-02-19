@@ -3,7 +3,7 @@ package me.test.weixin.utils.weixinutils.message;
 /**
  * Created by ZhaoTao on 2015/10/19.
  */
-public class VoiceMessage extends BaseMessage{
+public class VoiceMessage extends BaseMessage implements Message{
     //接收人微信号
     private String ToUserName;
     // 开发者微信号

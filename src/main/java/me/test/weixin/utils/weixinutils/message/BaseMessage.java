@@ -3,7 +3,7 @@ package me.test.weixin.utils.weixinutils.message;
  * 消息基类（公众帐号 -> 普通用户） 
  *  
  */  
-public class BaseMessage {  
+public class BaseMessage implements Message {
     // 接收方帐号（收到的OpenID）  
     private String ToUserName;  
     // 开发者微信号  

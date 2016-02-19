@@ -5,7 +5,7 @@ package me.test.weixin.utils.weixinutils.message;
  * @author liufeng 
  * @date 2013-05-19 
  */  
-public class Article {  
+public class Article{
     // 图文消息名称  
     private String Title;  
     // 图文消息描述  

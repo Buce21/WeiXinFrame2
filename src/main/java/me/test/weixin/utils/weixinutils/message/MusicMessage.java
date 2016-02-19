@@ -1,6 +1,6 @@
 package me.test.weixin.utils.weixinutils.message;
 
-public class MusicMessage {
+public class MusicMessage implements Message{
 	 // 接收方帐号（收到的OpenID）  
     private String ToUserName;  
     // 开发者微信号  

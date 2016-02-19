@@ -6,7 +6,7 @@ package me.test.weixin.utils.weixinutils.message;
  * @author liufeng 
  * @date 2013-05-19 
  */  
-public class Music {  
+public class Music{
     // 音乐名称  
     private String Title;  
     // 音乐描述  

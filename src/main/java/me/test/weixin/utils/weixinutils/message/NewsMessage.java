@@ -2,7 +2,7 @@ package me.test.weixin.utils.weixinutils.message;
 
 import java.util.List;
 
-public class NewsMessage {
+public class NewsMessage implements Message{
 	// 接收方帐号（收到的OpenID）  
     private String ToUserName;  
     // 开发者微信号  
