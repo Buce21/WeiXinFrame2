@@ -1,6 +1,7 @@
 package me.test.weixin.service;
 
 import me.test.weixin.utils.weixinutils.ReceiveXmlEntity;
+import me.test.weixin.utils.weixinutils.message.Message;
 
 /**
  * Created by ZhaoTao on 2016/2/19.
@@ -11,5 +12,5 @@ public interface IWeiXinCenterService {
      * @param xmlEntity
      * @return
      */
-    Object textResponse(ReceiveXmlEntity xmlEntity);
+    Message textResponse(ReceiveXmlEntity xmlEntity);
 }

@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 /**
  * Created by ZhaoTao on 2016/2/18.
@@ -36,7 +37,7 @@ public class WeiXinCenterController {
     private ReceiveXmlProcess receiveXmlProcess = new ReceiveXmlProcess();  //解析xml为对象
     private FormatXmlProcess formXML =new FormatXmlProcess();   //将实体对象封装为xml
 
-    String result = new String();   //返回结果
+    String result = new String();
     /**
      * 验证
      */
@@ -44,27 +45,25 @@ public class WeiXinCenterController {
     @RequestMapping(value="/checkSignatureFirst",produces = "application/json; charset=utf-8")
     public @ResponseBody
     String checkSignatureFirst(HttpServletRequest request) throws IOException {
-            logger.info("begin");
+            logger.info("---------Begin----------");
             /** 读取接收到的xml消息 */
             StringBuffer sb = new StringBuffer();
             InputStream is = request.getInputStream();
             InputStreamReader isr = new InputStreamReader(is, "UTF-8");
             BufferedReader br = new BufferedReader(isr);
-            String s = "";
+            String s;
             while ((s = br.readLine()) != null) {
                 sb.append(s);
             }
-            String xml = sb.toString(); //次即为接收到微信端发送过来的xml数据
+            String xml = sb.toString(); //微信端发送过来的xml数据
 
-
-            /**------------------------------------**/
-            xmlMsg =  receiveXmlProcess.getMsgEntity(xml);  //接收信息实体对象
+            xmlMsg =  receiveXmlProcess.getMsgEntity(xml);  //xml-->实体对象
             logger.info("接收信息为:"+xmlMsg.toString());
 
+            /**---------------根据消息类型分发任务-------------------**/
             Message message = null;    //返回值
             switch (xmlMsg.getMsgType()){
                 case "text":
-
                     try {
                         message = weiXinCenterService.textResponse(xmlMsg);
                     } catch (Exception e) {
@@ -72,34 +71,21 @@ public class WeiXinCenterController {
                     }
                     break;
             }
-
-
-//            if(msgContent.equals("4")){
-//
-//                try {
-//                    return formXML.formatXmlAnswer(textMessage);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-
-//
-
-
-//            try {
-//                result = formXML.formatXmlAnswer(newMsg);
-//                logger.info("发送消息为:"+newMsg.toString());
-//            } catch (Exception e) {
-//                result = "";
-//                e.printStackTrace();
-//            }
-        try {
-            result = formXML.formatXmlAnswer(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+            //消息类-->XML
+            try {
+                result = formXML.formatXmlAnswer(message);
+            } catch (Exception e) {
+                result = "<xml><ToUserName><![CDATA[" +
+                        xmlMsg.getFromUserName() +
+                        "]]></ToUserName><FromUserName><![CDATA[" +
+                        xmlMsg.getToUserName() +
+                        "]]></FromUserName><CreateTime>" +
+                        new Date().getTime() +
+                        "</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[出现未知错误=.=]]></Content></xml>";   //异常返回结果
+                e.printStackTrace();
+            }
+            logger.info("返回消息为:"+result);
+            return result;
         }
 
 }

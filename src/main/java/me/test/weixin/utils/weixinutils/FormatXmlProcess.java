@@ -33,7 +33,6 @@ public class FormatXmlProcess {
         sb.append("<xml>");
         sb.append(formatOBJtoSB(xmlEntity));
         sb.append("</xml>");
-        System.out.println("return:"+sb.toString());
         return sb.toString();
     }
 
