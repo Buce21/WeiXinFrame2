@@ -16,5 +16,6 @@
     <mvc:annotation-driven></mvc:annotation-driven>
 
     <mvc:resources location="/html/" mapping="/html/**"/>
+    <mvc:resources location="/weixinhtml/" mapping="/weixinhtml/**"/>
 
 </beans>

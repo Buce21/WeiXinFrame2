@@ -40,4 +40,12 @@ public class UserController {
         modelAndView.setViewName("findUser");
         return modelAndView;
     }
+
+    @RequestMapping("/testAg")
+    public ModelAndView testAg()throws Exception{
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("testAg");
+        return modelAndView;
+    }
 }

@@ -32,4 +32,9 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
     </bean>
 
+    <!-- 加载mongodb的属性配置文件 -->
+    <context:property-placeholder location="classpath:config/mongodb.properties" />
+
+    <import resource="classpath:/config/spring/mongodb-context.xml"/>
+
 </beans>

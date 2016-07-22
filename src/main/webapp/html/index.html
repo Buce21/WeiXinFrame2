@@ -926,5 +926,14 @@
     <script type="text/javascript" src="js/contabs.min.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
 </body>
+<script>
+    $(document).ready(function(){
+        alert(window.location.href);
+    })
+    function login(){
+        var b = encodeURIComponent("http://zhaotaotest.tunnel.qydev.com/WeiXinFrame2/html/index.html");
+        var a="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd1e31639d8707bab&redirect_uri=http%3A%2F%2Fzhaotaotest.tunnel.qydev.com%2FWeiXinFrame2%2Fhtml%2Findex.html&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+    }
 
+</script>
 </html>

@@ -16,13 +16,13 @@
 
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
-
+    <script src="http://libs.useso.com/js/angular.js/1.2.5/angular.min.js"></script>
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" id="app2" ng-init="func2()">
     <div class="middle-box text-center animated fadeInDown">
         <h1>404</h1>
-        <h3 class="font-bold">页面未找到！</h3>
+        <h3 class="font-bold">页面未找到！</h3>   {{t}}
 
         <div class="error-desc">
             抱歉，页面好像去火星了~
@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <input type="email" class="form-control" placeholder="请输入您需要查找的内容 …">
                 </div>
-                <button type="submit" class="btn btn-primary">搜索</button>
+                <button type="button" ng-click="a()" class="btn btn-primary">搜索</button>
             </form>
         </div>
     </div>
@@ -39,4 +39,17 @@
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 </body>
 
+<script>
+    var app2 = angular.module('app2', []);
+    angular.bootstrap(document.getElementById("app2"), ['app2']);
+    app2.controller("controllerOne",function($scope){
+        $scope.t = "123";
+        $scope.a = function(){
+            alert(1)
+        }
+    })
+    function func2(){
+        alert(22)
+    }
+</script>
 </html>

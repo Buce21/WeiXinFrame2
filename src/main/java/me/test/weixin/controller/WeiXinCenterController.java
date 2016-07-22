@@ -1,12 +1,13 @@
 package me.test.weixin.controller;
 
 import com.sun.istack.internal.logging.Logger;
-import me.test.weixin.service.WeiXinCenterServiceImpl;
+import me.test.weixin.service.IWeiXinCenterService;
 import me.test.weixin.utils.weixinutils.FormatXmlProcess;
 import me.test.weixin.utils.weixinutils.ReceiveXmlEntity;
 import me.test.weixin.utils.weixinutils.ReceiveXmlProcess;
 import me.test.weixin.utils.weixinutils.message.Message;
 import org.aspectj.weaver.ast.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,8 @@ import java.util.Date;
 @Scope("prototype")
 public class WeiXinCenterController {
 
-
-    private WeiXinCenterServiceImpl weiXinCenterService = new WeiXinCenterServiceImpl();
+    @Autowired
+    private IWeiXinCenterService weiXinCenterService;
 
 
     private static String TOKEN = "suibian";
@@ -70,7 +71,9 @@ public class WeiXinCenterController {
                         e.printStackTrace();
                     }
                     break;
+                //// TODO: 2016/2/22  其它类型任务
             }
+
             //消息类-->XML
             try {
                 result = formXML.formatXmlAnswer(message);
